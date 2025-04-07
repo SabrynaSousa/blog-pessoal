@@ -15,71 +15,83 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Entity
+
+
+@Entity // objeto que vira tabela no banco de dados
 @Table(name = "tb_postagens")
 public class Postagem {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@NotBlank(message = "O atributo titulo é obrigatório")
+	@Size(min = 5, max = 100, message = "O titulo tem que ser maior que 5 e menor que 100")
+	private String titulo;
+	
+	@NotBlank(message = "O atributo titulo é obrigatório")
+	@Size(min = 5, max = 1000, message = "O titulo tem que ser maior que 5 e menor que 1000")
+	private String texto;
+	
+	@UpdateTimestamp
+	private LocalDateTime data;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Tema tema;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;
+	
 
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Long id;
+	public Tema getTema() {
+		return tema;
+	}
 
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
 
-	 @NotBlank(message = "O atributo titulo e Obrigatorio!")
-	 @Size(min = 5, max = 100, message = "O atributo titulo deve conter no minimo 05 e no maximo 100 caracteres")
-     private String titulo;
+	public Long getId() {
+		return id;
+	}
 
-	 @NotBlank(message = "O atributo texto e Obrigatorio!")
-	 @Size(min = 10, max = 1000, message = "O atributo texto deve conter no minimo 10 e no maximo 1000 caracteres")
-     private String texto;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-@UpdateTimestamp
-private LocalDateTime data;
+	public String getTitulo() {
+		return titulo;
+	}
 
-@ManyToOne
-@JsonIgnoreProperties("postagem")
-private Tema tema;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
+	public String getTexto() {
+		return texto;
+	}
 
-public Long getId() {
-	return id;
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
+	public LocalDateTime getData() {
+		return data;
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 }
 
-public void setId(Long id) {
-	this.id = id;
-}
-
-public String getTitulo() {
-	return titulo;
-}
-
-public void setTitulo(String titulo) {
-	this.titulo = titulo;
-}
-
-public String getTexto() {
-	return texto;
-}
-
-public void setTexto(String texto) {
-	this.texto = texto;
-}
-
-public LocalDateTime getData() {
-	return data;
-}
-
-public void setData(LocalDateTime data) {
-	this.data = data;
-}
-
-public Tema getTema() {
-	return tema;
-}
-
-public void setTema(Tema tema) {
-	this.tema = tema;
-}
-
-
-
-}
